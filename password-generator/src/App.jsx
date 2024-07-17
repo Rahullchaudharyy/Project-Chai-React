@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useCallback,useEffect,useRef } from "react";
 
 const App = () => {
@@ -6,6 +5,14 @@ const App = () => {
   const [NumbAllow, setNumbAllow] = useState(false);
   const [CharAllow, setCharAllow] = useState(false);
   const [Password, setPassword] = useState("");
+
+
+  const passwordref =useRef(null)
+  const CopyPasswordToclipBoard = useCallback(()=>{
+    passwordref.current?.select()
+    passwordref.current?.setSelectionRange(0,20)  // for selecting the range how much copy ? 
+    window.navigator.clipboard.writeText(Password)
+  },[Password])
 
   const GeneratePassword = useCallback(() => {
     let pass = "";
@@ -38,8 +45,9 @@ const App = () => {
             value={Password}
             placeholder="Password"
             readOnly
+            ref={passwordref}
           />
-          <button className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0 ">
+          <button onClick={CopyPasswordToclipBoard} className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0 ">
             Copy
           </button>
         </div>
@@ -47,8 +55,8 @@ const App = () => {
           <div className="flex items-center gap-x-1">
             <input
               type="range"
-              min={7}
-              max={100}
+              min={8}
+              max={37}
               value={length}
               className="cursor-pointer"
               onChange={(e) => {
