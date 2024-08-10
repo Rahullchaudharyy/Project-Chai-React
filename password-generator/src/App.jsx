@@ -1,4 +1,4 @@
-import { useState, useCallback,useEffect,useRef } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 const App = () => {
   const [length, setlength] = useState(8);
@@ -6,23 +6,25 @@ const App = () => {
   const [CharAllow, setCharAllow] = useState(false);
   const [Password, setPassword] = useState("");
 
-
-  const passwordref =useRef(null)
-  const CopyPasswordToclipBoard = useCallback(()=>{
-    passwordref.current?.select()
-    passwordref.current?.setSelectionRange(0,20)  // for selecting the range how much copy ? 
-    window.navigator.clipboard.writeText(Password)
-  },[Password])
+  const passwordref = useRef(null);
+  const CopyPasswordToclipBoard = useCallback(() => {
+    passwordref.current?.select();
+    passwordref.current?.setSelectionRange(0, 20); // for selecting the range how much copy ?
+    window.navigator.clipboard.writeText(Password);
+  }, [Password]);
 
   const GeneratePassword = useCallback(() => {
     let pass = "";
     let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-    if (NumbAllow) str += "0123456789";
+    if (NumbAllow) {
+      str += "0123456789";
+    }
 
-
-    if (CharAllow) str += "~!@#$%^&*()_+{}[]`";
-
+    if (CharAllow) {
+      str += "~!@#$%^&*()_+{}[]`";
+    }
+    
 
     for (let i = 1; i <= length; i++) {
       let char = Math.floor(Math.random() * str.length + 1);
@@ -32,8 +34,8 @@ const App = () => {
   }, [length, NumbAllow, CharAllow, setPassword]);
 
   useEffect(() => {
-    GeneratePassword()
-  }, [length, NumbAllow, CharAllow, GeneratePassword])
+    GeneratePassword();
+  }, [length, NumbAllow, CharAllow, GeneratePassword]);
 
   return (
     <>
@@ -47,7 +49,10 @@ const App = () => {
             readOnly
             ref={passwordref}
           />
-          <button onClick={CopyPasswordToclipBoard} className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0 ">
+          <button
+            onClick={CopyPasswordToclipBoard}
+            className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0 "
+          >
             Copy
           </button>
         </div>
@@ -85,7 +90,6 @@ const App = () => {
             id="CharInput"
           />
           <label>Charecter</label>
-
         </div>
       </div>
     </>
